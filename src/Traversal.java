@@ -1,5 +1,8 @@
 import static org.junit.jupiter.api.DynamicTest.stream;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Traversal {
   public static void main(String[] args) {
     TreeNode<Integer> root = new TreeNode<>(10, null, null);
@@ -26,7 +29,24 @@ public class Traversal {
     // postorder(root);
     // inorder(stringRoot);
     // printGreater(root, 7);
-    System.out.println(countNodes(stringRoot));
+    // Map<String, Integer> counts = new HashMap<>();
+    System.out.println(toMap(stringRoot));
+  }
+  public static <T> Map<T,Integer> toMap(TreeNode<T> node) {
+    Map<T, Integer> counts = new HashMap<>();
+    toMap(node, counts);
+
+    return counts;
+  }
+
+  private static <T> void toMap(TreeNode<T> node, Map<T, Integer> counts) {
+    if (node == null) {
+      return;
+    }
+    //fill up those counts
+    counts.put(node.value, counts.getOrDefault(node.value, 0) + 1);
+    toMap(node.left, counts);
+    toMap(node.right, counts);
   }
 
   public static int countNodes(TreeNode<?> node) {
